@@ -69,24 +69,25 @@ def runSiege(n, r, server):
   return outputToDict(output_str)
 
 
-def main(n):
+def main(k):
   plt.ion()
-  for i in range(1,1000):
+  for i in range(1,10000):
     n = i*10
     print '>>> client:', 1, ' ', n
     plotDynDict(runSiege(n, 10, '192.168.99.100:30001'),\
-    ['Response time', "Failed transactions"], n)
+    ['Response time', "Failed transactions", "Transaction rate",\
+    "Throughput", "Longest transaction", "Shortest transaction"], n)
     #time.sleep(10)
 
-  print ">>> >>> END"
+  #print ">>> >>> END"
   
-  result = {}
-  result['iteration'] = n
-  result['clients'] = xx
-  result['values'] = yy
-  with open('evaluation.json', 'a') as out:
-    json.dump(result, out)
-    out.write('\n')
+    result = {}
+    result['iteration'] = k
+    result['client'] = n
+    result['values'] = yy
+    with open('evaluation.json', 'a') as out:
+     json.dump(result, out)
+     out.write('\n')
 
 for i in range(0,30):
   del xx[:]

@@ -1,1 +1,4 @@
 
+{"values": {"Failed transactions": [100.0], "Shortest transaction": [0.0], "Throughput": [0.0], "Longest transaction": [0.0], "Response time": [0.0], "Transaction rate": [0.0]}, "clients": [10], "iteration": 0}
+{"values": {"Failed transactions": [100.0], "Shortest transaction": [0.0], "Throughput": [0.0], "Longest transaction": [0.0], "Response time": [0.0], "Transaction rate": [0.0]}, "client": 10, "iteration": 0}
+{"values": {"Failed transactions": [100.0], "Shortest transaction": [0.0], "Throughput": [0.0], "Longest transaction": [0.0], "Response time": [0.0], "Transaction rate": [0.0]}, "client": 10, "iteration": 1}
