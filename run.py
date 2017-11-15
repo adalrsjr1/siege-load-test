@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import matplotlib.pyplot as plt
+import collections
 import time
+import json
 import subprocess
 import re
 
@@ -32,15 +34,20 @@ def plotListDict(l, label):
   plt.xlabel('clients')
   plt.show()
 
-xx = list()
-yy = list()
-def plotDynDict(d, label, x):
-  y = d[label]
-  print '>>> (',x,',',y,')'
+xx = []
+yy = collections.defaultdict(list)
+def plotDynDict(d, labels, x):
+  #y = d[label]
+  y = []
+  for l in labels:
+    yy[l].append(d[l])
+
   xx.append(x)
-  yy.append(y)
-  plt.plot(xx,yy, 'r-o')
-  plt.pause(0.05)
+
+  for k,v in yy.items():
+    print k, ':', v
+    plt.plot(xx,v, '-o')
+    plt.pause(0.05)
 
 def runSiege(n, r, server):
   CONCURRENT = n
@@ -61,22 +68,28 @@ def runSiege(n, r, server):
   
   return outputToDict(output_str)
 
-l = list()
 
-plt.ion()
-for i in range(9,15):
-  print '>>> client:', i+1, ' ', 2**i
-  plotDynDict(runSiege(2**i, 10, '192.168.99.100:30001'),\
-  'Response time', i*2+1)
-  time.sleep(10)
+def main(n):
+  plt.ion()
+  for i in range(1,1000):
+    n = i*10
+    print '>>> client:', 1, ' ', n
+    plotDynDict(runSiege(n, 10, '192.168.99.100:30001'),\
+    ['Response time', "Failed transactions"], n)
+    #time.sleep(10)
 
-print ">>> >>> END"
+  print ">>> >>> END"
+  
+  result = {}
+  result['iteration'] = n
+  result['clients'] = xx
+  result['values'] = yy
+  with open('evaluation.json', 'a') as out:
+    json.dump(result, out)
+    out.write('\n')
 
-while True:
-  plt.pause(0.05)
-
-  #l.append(runSiege(i*2+1, 10, '192.168.99.100:30001'))
-  #plotListDict(l, 'Response time') 
-  #time.sleep(30)
-
-#plotListDict(l, 'Response time')
+for i in range(0,30):
+  del xx[:]
+  for k,v in yy.items():
+    del v[:]
+  main(i)
