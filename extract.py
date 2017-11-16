@@ -49,15 +49,15 @@ def toJson(d, name):
     json.dump(d, out)
     out.write('\n')
 
-def repeat(concurrent, it):
+def repeat(concurrent, it, url):
   for i in range(0, it):
-    d = runSiege(concurrent, 10, '192.168.99.100:30001')
+    d = runSiege(concurrent, 10, url)
     d['concurrent'] = concurrent
     d['iteration'] = i
     toJson(d, 'evaluation.json')
 
-def main(n, r):
+def main(n, r, url):
   for i in range(0,n):
-    repeat(i,r)
+    repeat(i,r, url)
 
-main(int(sys.argv[1]), int(sys.argv[2]))
+main(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3])
