@@ -50,8 +50,8 @@ def toJson(d, name):
 
 def repeat(concurrent, it, url):
   for i in range(1, it+1):
-    d = runSiege(concurrent*10, 10, url)
-    d['concurrent'] = concurrent
+    d = runSiege(10**concurrent, 10, url)
+    d['concurrent'] = 10**concurrent
     d['iteration'] = i
     toJson(d, 'evaluation.json')
 
