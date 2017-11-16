@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import matplotlib.pyplot as plt
 import collections
 import time
 import json
